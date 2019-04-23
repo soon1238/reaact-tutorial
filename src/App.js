@@ -7,9 +7,7 @@ function App() {
     return date.toLocaleDateString();
   }
   
-  function Tick(){
-    return   <h2>It is {new Date().toLocaleTimeString()}.</h2>
-  }
+
 
   function Comment(props) {
     return (
@@ -47,13 +45,8 @@ function App() {
     return <h1>Hello, {props.name}</h1>;
   };
 
-  // function Clock(props) {
-  //   return (
-  //     <div>
-  //       <h1>Hello, world!</h1>
-  //       <h2>It is {props.date.toLocaleTimeString()}.</h2>
-  //     </div>
-  //   );
+  // function FormattedDate(props) {
+  //   return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
   // }
   
   class Clock extends React.Component {
@@ -90,6 +83,44 @@ function App() {
 
   }
 
+  class Toggle extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {isToggleOn: true};
+  
+      // This binding is necessary to make `this` work in the callback
+      this.handleClick = this.handleClick.bind(this);
+    }
+  
+    handleClick() {
+      this.setState(state => ({
+        isToggleOn: !state.isToggleOn
+      }));
+    }
+  
+    render() {
+      return (
+        <button onClick={this.handleClick}>
+          {this.state.isToggleOn ? 'ON' : 'OFF'}
+        </button>
+      );
+    }
+  }
+
+  class LoggingButton extends React.Component {
+    handleClick() {
+      console.log('this is:', this);
+    }
+  
+    render() {
+      // This syntax ensures `this` is bound within handleClick
+      return (
+        <button onClick={(e) => this.handleClick(e)}>
+          Click me
+        </button>
+      );
+    }
+  }
 
   return (
     <div className="App">
@@ -106,7 +137,8 @@ function App() {
         >
           Learn React
         </a>
-        <Clock date={new Date()} />
+        <Clock />
+        <Clock />
        
       </header>
       <div>
@@ -119,7 +151,8 @@ function App() {
        text={comment.text}
        author={comment.author}
      />
-    
+    <Toggle />
+    <LoggingButton />
     </div> 
 
 
